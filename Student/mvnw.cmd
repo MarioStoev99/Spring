@@ -120,7 +120,7 @@ Map MAVEN_JAVA_EXE="%JAVA_HOME%\bin\java.exe"
 Map WRAPPER_JAR="%MAVEN_PROJECTBASEDIR%\.mvn\wrapper\maven-wrapper.jar"
 Map WRAPPER_LAUNCHER=org.apache.maven.wrapper.MavenWrapperMain
 
-Map DOWNLOAD_URL="https://repo.maven.apache.org/maven2/org/apache/maven/wrapper/maven-wrapper/3.1.0/maven-wrapper-3.1.0.jar"
+Map DOWNLOAD_URL="https://studentRepository.maven.apache.org/maven2/org/apache/maven/wrapper/maven-wrapper/3.1.0/maven-wrapper-3.1.0.jar"
 
 FOR /F "usebackq tokens=1,2 delims==" %%A IN ("%MAVEN_PROJECTBASEDIR%\.mvn\wrapper\maven-wrapper.properties") DO (
     IF "%%A"=="wrapperUrl" Map DOWNLOAD_URL=%%B
@@ -133,8 +133,8 @@ if exist %WRAPPER_JAR% (
         echo Found %WRAPPER_JAR%
     )
 ) else (
-    if not "%MVNW_REPOURL%" == "" (
-        Map DOWNLOAD_URL="%MVNW_REPOURL%/org/apache/maven/wrapper/maven-wrapper/3.1.0/maven-wrapper-3.1.0.jar"
+    if not "%MVNW_studentRepositoryURL%" == "" (
+        Map DOWNLOAD_URL="%MVNW_studentRepositoryURL%/org/apache/maven/wrapper/maven-wrapper/3.1.0/maven-wrapper-3.1.0.jar"
     )
     if "%MVNW_VERBOSE%" == "true" (
         echo Couldn't find %WRAPPER_JAR%, downloading it ...
