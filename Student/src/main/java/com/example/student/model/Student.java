@@ -1,4 +1,4 @@
-package com.example.student;
+package com.example.student.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Objects;
 
+// @Data за гетъри и сетъри
 @Entity(name = "students")
 public class Student {
 
@@ -13,10 +14,9 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String age;
+    private int age;
 
-    public Student(Long id, String name, String age) {
-        this.id = id;
+    public Student(String name, int age) {
         this.name = name;
         this.age = age;
     }
@@ -33,11 +33,15 @@ public class Student {
         this.name = name;
     }
 
-    public String getAge() {
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public int getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(int age) {
         this.age = age;
     }
 

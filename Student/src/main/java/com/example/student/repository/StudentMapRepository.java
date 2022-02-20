@@ -1,21 +1,21 @@
-package com.example.student.collection;
+package com.example.student.repository;
 
-import com.example.student.Student;
+import com.example.student.model.Student;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
 @Repository
-public class StudentRepositoryImpl implements StudentRepository {
+public class StudentMapRepository implements StudentRepository {
 
     private final Map<Long, Student> students;
 
-    public StudentRepositoryImpl() {
+    public StudentMapRepository() {
         students = new HashMap<>();
     }
 
     @Override
-    public void add(Student student) {
+    public void saveAndFlush(Student student) {
         if(students.get(student.getId()) != null) {
             throw new IllegalStateException("Student already exist!");
         }
@@ -23,18 +23,18 @@ public class StudentRepositoryImpl implements StudentRepository {
     }
 
     @Override
-    public Optional<Student> get(Long id) {
+    public Optional<Student> getById(Long id) {
         return Optional.ofNullable(students.get(id));
     }
 
     @Override
-    public Optional<Student> remove(Long id) {
+    public Optional<Student> deleteById(Long id) {
         return Optional.ofNullable(students.remove(id));
     }
 
     @Override
-    public Collection<Student> getStudents() {
-        return students.values();
+    public List<Student> findAll() {
+        return (List<Student>) students.values();
     }
 
     @Override
