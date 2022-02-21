@@ -7,9 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.ValidatorFactory;
+import javax.xml.validation.Validator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class StudentService {
@@ -32,8 +37,12 @@ public class StudentService {
         return studentPostgreRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(STUDENT_NOT_FOUND));
     }
 
+    // java bean annotation
     public List<Student> addStudent(Student student) {
-        if (!correctStudentProperties(student)) {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = (Validator) factory.getValidator();
+        Set<ConstraintViolation<Student>> violations = validator.validate(student);
+        if (!violations.isEmpty()) {
             throw new IllegalArgumentException(INVALID_FIELD);
         }
         studentPostgreRepository.saveAndFlush(student);
@@ -67,8 +76,5 @@ public class StudentService {
         return studentPostgreRepository.findAll();
     }
 
-    private boolean correctStudentProperties(Student student) {
-        String name = student.getName();
-        return name != null && name.length() > 0 && student.getAge() > 0;
-    }
+
 }

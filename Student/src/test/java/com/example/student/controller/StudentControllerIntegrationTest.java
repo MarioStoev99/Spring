@@ -1,7 +1,6 @@
 package com.example.student.controller;
 
 import com.example.student.model.Student;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -12,15 +11,15 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.annotations.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureMockMvc
-public class StudentControllerIntegrationTest {
+public class StudentControllerIntegrationTest extends AbstractTestNGSpringContextTests {
 
     private static final String HOST = "http://localhost:";
     private static final String PATH = "/student";
@@ -31,14 +30,14 @@ public class StudentControllerIntegrationTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Test
+    @Test(dependsOnMethods = "testAddStudent")
     public void testGetStudents() {
         ResponseEntity<String> response = restTemplate.getForEntity(HOST + port + PATH, String.class);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
-    @Test
+    @Test(dependsOnMethods = "testAddStudent")
     public void testGetStudent() {
         ResponseEntity<String> response = restTemplate.getForEntity(HOST + port + PATH + "/1", String.class);
 
@@ -74,6 +73,6 @@ public class StudentControllerIntegrationTest {
 
         Student response = restTemplate.getForObject(HOST + port + PATH + "/1", Student.class);
         assertThat(response.getName(),notNullValue());
-        assertThat(response.getId(),is(1));
+        assertThat(response.getId(),is(1L));
     }
 }

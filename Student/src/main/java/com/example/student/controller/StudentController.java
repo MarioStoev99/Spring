@@ -1,4 +1,4 @@
-package controller;
+package com.example.student.controller;
 
 import com.example.student.exception.StudentNotFoundException;
 import com.example.student.model.Student;
