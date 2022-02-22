@@ -87,13 +87,6 @@ public class StudentServiceTest {
     }
 
     @Test
-    public void testUpdateStudentInvalidArgument() {
-        when(studentRepository.findById(any())).thenReturn(Optional.of(new Student("Mario",23)));
-
-        assertThrows(IllegalArgumentException.class, () -> studentService.updateStudent(1L,new Student(null,23)));
-    }
-
-    @Test
     public void testUpdateStudentSuccess() {
         Student kristiyan = new Student("Kristiyan",25);
         Student mario = new Student("Mario",23);

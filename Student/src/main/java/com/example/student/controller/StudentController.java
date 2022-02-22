@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.Collection;
 
 @RestController
@@ -38,7 +39,7 @@ public class StudentController {
     }
 
     @PostMapping
-    public ResponseEntity<Collection<Student>> addStudent(@RequestBody Student student) {
+    public ResponseEntity<Collection<Student>> addStudent(@Valid @RequestBody Student student) {
         studentPostgreService.addStudent(student);
         return new ResponseEntity<>(studentPostgreService.getStudents(), HttpStatus.OK);
     }

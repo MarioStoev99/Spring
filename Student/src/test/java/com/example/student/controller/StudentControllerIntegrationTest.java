@@ -52,7 +52,7 @@ public class StudentControllerIntegrationTest extends AbstractTestNGSpringContex
         assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
     }
 
-    @Test
+    @Test(dependsOnMethods = "testGetStudent")
     public void testRemoveStudent() {
         HttpEntity<Student> student = new HttpEntity<>(new Student("Mario", 23));
         restTemplate.postForEntity(HOST + port + PATH, student, String.class);
