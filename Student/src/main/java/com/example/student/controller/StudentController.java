@@ -6,6 +6,7 @@ import com.example.student.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -30,7 +31,7 @@ public class StudentController {
 
     @GetMapping(value = "{id}")
     @ResponseBody
-    public ResponseEntity<Student> getStudents(@PathVariable Long id) {
+    public ResponseEntity<Student> getStudent(@PathVariable Long id) {
         try {
             return new ResponseEntity<>(studentPostgreService.getStudent(id), HttpStatus.OK);
         } catch (StudentNotFoundException e) {
@@ -55,7 +56,7 @@ public class StudentController {
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Collection<Student>> updateStudent(@PathVariable Long id, @RequestBody Student student) {
+    public ResponseEntity<Collection<Student>> updateStudent(@PathVariable Long id,@Valid @RequestBody Student student) {
         try {
             studentPostgreService.updateStudent(id, student);
         } catch (StudentNotFoundException e) {

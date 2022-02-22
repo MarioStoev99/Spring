@@ -1,5 +1,6 @@
 package com.example.student.controller;
 
+import com.example.student.exception.StudentNotFoundException;
 import com.example.student.model.Student;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -42,6 +43,21 @@ public class StudentControllerMvcIntegrationTest extends AbstractTestNGSpringCon
                 .andExpect(content().json("[]"));
     }
 
+    @Test
+    public void testGetStudentNotFound() throws Exception {
+        mockMvc.perform(get("/student/1231221"))
+                .andExpect(status().isNotFound());
+    }
+
+//    @Test
+//    public void testAddStudentInvalidClientJson() throws Exception {
+//        Student student = new Student(null, 160);
+//        String jsonString = gson.toJson(student);
+//
+//        mockMvc.perform(post("/student").contentType(MediaType.APPLICATION_JSON).content(jsonString))
+//                .andExpect(status().isBadRequest());
+//    }
+
     @Test(dependsOnMethods = "testGetStudents")
     public void testAddStudent() throws Exception {
         Student student0 = new Student("Mario", 23);
@@ -83,6 +99,12 @@ public class StudentControllerMvcIntegrationTest extends AbstractTestNGSpringCon
                 .andExpect(content().json(jsonString));
     }
 
+    @Test
+    public void testDeleteStudentNotFound() throws Exception {
+        mockMvc.perform(delete("/student/1231221"))
+                .andExpect(status().isNotFound());
+    }
+
     @Test(dependsOnMethods = "testAddStudent")
     public void testRemoveStudent() throws Exception {
         String json = mockMvc.perform(delete("/student/1"))
@@ -101,6 +123,36 @@ public class StudentControllerMvcIntegrationTest extends AbstractTestNGSpringCon
         assertArrayEquals(expected.toArray(), actual.toArray());
     }
 
+    @Test
+    public void testUpdateStudentNotFound() throws Exception {
+        Student student = new Student("Mario", 23);
+        String jsonString = gson.toJson(student);
+
+        mockMvc.perform(put("/student/1231221")
+                        .contentType(MediaType.APPLICATION_JSON).content(jsonString))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test(dependsOnMethods = "testAddStudent")
+    public void testUpdateStudentEqualNames() throws Exception {
+        Student student = new Student("Kristiyan", 35);
+        String jsonString = gson.toJson(student);
+
+        mockMvc.perform(put("/student/3")
+                        .contentType(MediaType.APPLICATION_JSON).content(jsonString))
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+//    @Test(dependsOnMethods = "testAddStudent")
+//    public void testUpdateStudentInvalidClientJson() throws Exception {
+//        Student student = new Student(null, 160);
+//        String jsonString = gson.toJson(student);
+//
+//        mockMvc.perform(put("/student/3")
+//                        .contentType(MediaType.APPLICATION_JSON).content(jsonString))
+//                .andExpect(status().isBadRequest());
+//    }
+
     @Test(dependsOnMethods = "testRemoveStudent")
     public void testUpdateStudent() throws Exception {
         Student student1 = new Student("Kristiyan", 29);
@@ -118,7 +170,6 @@ public class StudentControllerMvcIntegrationTest extends AbstractTestNGSpringCon
         List<Student> actual = gson.fromJson(json, type);
 
         assertArrayEquals(expected.toArray(), actual.toArray());
-
     }
 
 }
