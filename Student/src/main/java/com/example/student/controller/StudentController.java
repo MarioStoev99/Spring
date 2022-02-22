@@ -6,11 +6,16 @@ import com.example.student.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 @RestController
@@ -32,11 +37,7 @@ public class StudentController {
     @GetMapping(value = "{id}")
     @ResponseBody
     public ResponseEntity<Student> getStudent(@PathVariable Long id) {
-        try {
-            return new ResponseEntity<>(studentPostgreService.getStudent(id), HttpStatus.OK);
-        } catch (StudentNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        }
+        return new ResponseEntity<>(studentPostgreService.getStudent(id), HttpStatus.OK);
     }
 
     @PostMapping
@@ -47,23 +48,13 @@ public class StudentController {
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Collection<Student>> deleteStudent(@PathVariable Long id) {
-        try {
-            studentPostgreService.deleteStudent(id);
-        } catch (StudentNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        }
+        studentPostgreService.deleteStudent(id);
         return new ResponseEntity(studentPostgreService.getStudents(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Collection<Student>> updateStudent(@PathVariable Long id,@Valid @RequestBody Student student) {
-        try {
-            studentPostgreService.updateStudent(id, student);
-        } catch (StudentNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        } catch (IllegalArgumentException e) {
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
-        }
+    public ResponseEntity<Collection<Student>> updateStudent(@PathVariable Long id, @Valid @RequestBody Student student) {
+        studentPostgreService.updateStudent(id, student);
         return new ResponseEntity<>(studentPostgreService.getStudents(), HttpStatus.OK);
     }
 }

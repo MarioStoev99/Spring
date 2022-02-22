@@ -1,6 +1,5 @@
 package com.example.student.controller;
 
-import com.example.student.exception.StudentNotFoundException;
 import com.example.student.model.Student;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -49,14 +48,14 @@ public class StudentControllerMvcIntegrationTest extends AbstractTestNGSpringCon
                 .andExpect(status().isNotFound());
     }
 
-//    @Test
-//    public void testAddStudentInvalidClientJson() throws Exception {
-//        Student student = new Student(null, 160);
-//        String jsonString = gson.toJson(student);
-//
-//        mockMvc.perform(post("/student").contentType(MediaType.APPLICATION_JSON).content(jsonString))
-//                .andExpect(status().isBadRequest());
-//    }
+    @Test
+    public void testAddStudentInvalidClientJson() throws Exception {
+        Student student = new Student(null, 160);
+        String jsonString = gson.toJson(student);
+
+        mockMvc.perform(post("/student").contentType(MediaType.APPLICATION_JSON).content(jsonString))
+                .andExpect(status().isBadRequest());
+    }
 
     @Test(dependsOnMethods = "testGetStudents")
     public void testAddStudent() throws Exception {
@@ -67,8 +66,6 @@ public class StudentControllerMvcIntegrationTest extends AbstractTestNGSpringCon
         Student student2 = new Student("Kristiyan", 29);
         String jsonString2 = gson.toJson(student2);
 
-        // mockmvc test json
-        // imam opredeleno pole v json-a
         mockMvc.perform(post("/student").contentType(MediaType.APPLICATION_JSON).content(jsonString0))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
@@ -143,15 +140,15 @@ public class StudentControllerMvcIntegrationTest extends AbstractTestNGSpringCon
                 .andExpect(status().isUnprocessableEntity());
     }
 
-//    @Test(dependsOnMethods = "testAddStudent")
-//    public void testUpdateStudentInvalidClientJson() throws Exception {
-//        Student student = new Student(null, 160);
-//        String jsonString = gson.toJson(student);
-//
-//        mockMvc.perform(put("/student/3")
-//                        .contentType(MediaType.APPLICATION_JSON).content(jsonString))
-//                .andExpect(status().isBadRequest());
-//    }
+    @Test
+    public void testUpdateStudentInvalidClientJson() throws Exception {
+        Student student = new Student(null, 160);
+        String jsonString = gson.toJson(student);
+
+        mockMvc.perform(put("/student/3")
+                        .contentType(MediaType.APPLICATION_JSON).content(jsonString))
+                .andExpect(status().isBadRequest());
+    }
 
     @Test(dependsOnMethods = "testRemoveStudent")
     public void testUpdateStudent() throws Exception {
