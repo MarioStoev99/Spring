@@ -1,6 +1,6 @@
 package com.example.student.model;
 
-import com.example.course.model.Course;
+import com.example.course.Course;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,12 +17,20 @@ public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long studentId;
 
-    @ManyToMany
+    @ManyToMany(
+            cascade = CascadeType.ALL
+    )
     @JoinTable(name = "student_courses",
-            joinColumns = @JoinColumn(name = "student_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id"))
+            joinColumns = @JoinColumn(
+                    name = "student_id",
+                    referencedColumnName = "studentId"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "course_id",
+                    referencedColumnName = "courseId"
+            ))
     private List<Course> courses;
 
     @NotEmpty(message = "Name cannot be null or empty")

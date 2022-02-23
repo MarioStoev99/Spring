@@ -1,12 +1,11 @@
-package com.example.course.service;
+package com.example.course;
 
-import com.example.course.model.Course;
-import com.example.course.repository.CourseRepository;
+import com.example.course.Course;
+import com.example.course.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CourseService {

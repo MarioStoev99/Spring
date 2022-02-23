@@ -69,6 +69,6 @@ public class StudentControllerIntegrationTest extends AbstractTestNGSpringContex
 
         Student response = restTemplate.getForObject(HOST + port + PATH + "/1", Student.class);
         assertThat(response.getName(),notNullValue());
-        assertThat(response.getId(),is(1L));
+        assertThat(response.getStudentId(),is(1L));
     }
 }

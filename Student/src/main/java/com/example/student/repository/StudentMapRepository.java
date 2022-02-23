@@ -16,10 +16,10 @@ public class StudentMapRepository implements StudentRepository {
 
     @Override
     public void saveAndFlush(Student student) {
-        if(students.get(student.getId()) != null) {
+        if(students.get(student.getStudentId()) != null) {
             throw new IllegalStateException("Student already exist!");
         }
-        students.put(student.getId(), student);
+        students.put(student.getStudentId(), student);
     }
 
     @Override
@@ -39,9 +39,9 @@ public class StudentMapRepository implements StudentRepository {
 
     @Override
     public Optional<Student> update(Student student) {
-        if(students.get(student.getId()) == null) {
-            throw new IllegalStateException("The provided student with id " + student.getId() +  " does not exist!");
+        if(students.get(student.getStudentId()) == null) {
+            throw new IllegalStateException("The provided student with id " + student.getStudentId() +  " does not exist!");
         }
-        return Optional.ofNullable(students.put(student.getId(),student));
+        return Optional.ofNullable(students.put(student.getStudentId(),student));
     }
 }

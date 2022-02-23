@@ -1,6 +1,6 @@
-package com.example.course.repository;
+package com.example.course;
 
-import com.example.course.model.Course;
+import com.example.course.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
