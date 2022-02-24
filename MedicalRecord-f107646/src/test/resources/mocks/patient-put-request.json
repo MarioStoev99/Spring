@@ -1,0 +1,12 @@
+{
+  "identical_number": "001122334455",
+  "name": "Petur",
+  "paid_medical_insurance": true,
+  "doctor": {
+    "id": "2a8b7bea-1046-4dc6-823c-b437ca2b8467",
+    "name": "dr. Kostadinov",
+    "specialties": [
+      "test"
+    ]
+  }
+}

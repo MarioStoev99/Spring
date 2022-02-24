@@ -5,6 +5,7 @@ import com.example.student.model.Student;
 import com.example.student.repository.StudentPostgreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
@@ -27,7 +28,7 @@ public class StudentService {
         return studentPostgreRepository.findAll();
     }
 
-    public Student getStudent(Long id) throws StudentNotFoundException {
+    public Student getStudent(Long id) {
         return studentPostgreRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(STUDENT_NOT_FOUND));
     }
 
@@ -36,7 +37,7 @@ public class StudentService {
         return studentPostgreRepository.findAll();
     }
 
-    public List<Student> deleteStudent(Long id) throws StudentNotFoundException {
+    public List<Student> deleteStudent(Long id) {
         Optional<Student> student = studentPostgreRepository.findById(id);
         if (student.isEmpty()) {
             throw new StudentNotFoundException(STUDENT_NOT_FOUND);
@@ -46,7 +47,7 @@ public class StudentService {
     }
 
     @Transactional
-    public List<Student> updateStudent(Long id, Student student) throws StudentNotFoundException {
+    public List<Student> updateStudent(Long id, Student student) {
         Optional<Student> databaseStudent = studentPostgreRepository.findById(id);
         if (databaseStudent.isEmpty()) {
             throw new StudentNotFoundException("The provided id does not exist!");

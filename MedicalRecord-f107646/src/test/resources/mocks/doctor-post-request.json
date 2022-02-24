@@ -1,0 +1,14 @@
+{
+  "id": "2a8b7bea-1046-4dc6-823c-b437ca2b8467",
+  "name": "dr. Kostadinov",
+  "specialties": [
+    "test"
+  ],
+  "patients": [
+    {
+      "identical_number": "0011223344",
+      "name": "Mario",
+      "paid_medical_insurance": true
+    }
+  ]
+}

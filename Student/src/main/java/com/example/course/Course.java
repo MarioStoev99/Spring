@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ManyToAny;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -19,35 +20,30 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "courses")
 public class Course {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long courseId;
     private String name;
 
-    @OneToOne(
-            mappedBy = "course"
-    )
-    private CourseMaterial courseMaterial;
+//    @OneToOne(
+//            mappedBy = "courses"
+//    )
+//    private CourseMaterial courseMaterial;
+//
+//    @ManyToOne(
+//            // The object will be created and saved automatically to the database,so we will bypass exceptions
+//            cascade = CascadeType.ALL
+//    )
+//    @JoinColumn(
+//            name = "teacher_id",
+//            referencedColumnName = "teacherId"
+//    )
+//    private Teacher teacher;
 
-    @ManyToOne(
-            // The object will be created and saved automatically to the database,so we will bypass exceptions
-            cascade = CascadeType.ALL
-    )
-    @JoinColumn(
-            name = "teacher_id",
-            referencedColumnName = "teacherId"
-    )
-    private Teacher teacher;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "courses")
-    private List<Student> students;
-
-    public void addStudent(Student student) {
-        if(students == null) {
-            students = new ArrayList<>();
-        }
-        students.add(student);
-    }
+//    @ManyToMany(mappedBy = "courses")
+//    private List<Student> students;
 }
