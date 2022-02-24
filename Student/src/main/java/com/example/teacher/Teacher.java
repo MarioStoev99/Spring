@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "teachers")
 public class Teacher {
 
     @Id
@@ -30,12 +31,6 @@ public class Teacher {
     private String firstName;
     private String lastName;
 
-    @OneToMany(
-            cascade = CascadeType.ALL
-    )
-    @JoinColumn(
-            name = "course_id",
-            referencedColumnName = "courseId"
-    )
-    private List<Course> courses;
+//    @OneToMany(mappedBy = "teachers")
+//    private List<Course> courses;
 }

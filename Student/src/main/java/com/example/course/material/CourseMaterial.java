@@ -13,6 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Data
+@Table(name = "course_materials")
 public class CourseMaterial {
     @Id
     @SequenceGenerator(
@@ -27,18 +28,18 @@ public class CourseMaterial {
     private Long courseMaterialId;
     private String url;
 
-    @OneToOne(
-            cascade = CascadeType.ALL,
-            // it is not need to obtain information about a course
-            fetch = FetchType.LAZY,
-            // when we push material to the database,we must have a specified course , otherwise
-            // we will receive an exception
-            optional = false
-    )
-    @JoinColumn(
-            name = "course_id",
-            referencedColumnName = "courseId"
-    )
-    private Course course;
+//    @OneToOne(
+//            cascade = CascadeType.ALL,
+//            // it is not need to obtain information about a course
+//            fetch = FetchType.LAZY,
+//            // when we push material to the database,we must have a specified course , otherwise
+//            // we will receive an exception
+//            optional = false
+//    )
+//    @JoinColumn(
+//            name = "course_id",
+//            referencedColumnName = "courseId"
+//    )
+//    private Course course;
 
 }

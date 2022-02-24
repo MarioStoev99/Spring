@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StudentPostgreRepository extends JpaRepository<Student,Long> {
+    Student getStudentByName(String name);
 }
